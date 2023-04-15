@@ -1,12 +1,12 @@
 <template>
 <article>
     <div class="weather-box">
-        <div id="temp">temp</div>
-        <div class="color-size" id="weather">weertje</div>
-        <div id="city-name">New Amsterdam</div>
-        <div class="color-size" id="date">date</div>
-        <div class="color-size" id="humidity">humid</div>
-        <div class="color-size" id="feeling">feel</div>
+        <div id="temp">{{ temperature }}</div>
+        <div class="color-size" id="weather">{{ weather}}</div>
+        <div id="city-name">{{ city }}</div>
+        <div class="color-size" id="date">{{ date }}</div>
+        <div class="color-size" id="humidity"><i class="icon-tint"></i>&nbsp;{{ humidity }}</div>
+        <div class="color-size" id="feeling"><i class="icon-smile"></i>&nbsp; Feels: {{ feelingTemperature }}</div>
     </div>
 </article>
 </template>
@@ -17,9 +17,14 @@ import axios from 'axios';
 
 const apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
 const apiKey = 'e4f5d4086edc70493ee3c27099fff3d2';
-const city = ref('London');
+let temperature = ref('');
+let weather = ref('');
+let city = ref('London');
+let date = ref('');
+let humidity = ref('');
+let feelingTemperature = ref('');
 
-function getTemperature() {
+function getWeatherData() {
     axios.get(apiUrl, {
         params: {
             q: city.value,
@@ -28,20 +33,33 @@ function getTemperature() {
         }
     })
     .then(response => {
-        const temperature = response.data.main.temp;
-        console.log(`Current temperature in ${city.value}: ${temperature}°C`);
-        document.getElementById('temp').innerHTML = `${temperature}°C`;
-        // TODO: ROUND DE GETAL, en daarna spatie toevoege voor celsius
-        //<!-- TODO: HUMIDITY (icon tint) ICON, feel temp (icon smile)-->
+        temperature.value = Math.round(response.data.main.temp) + ' °C';
+        feelingTemperature.value = Math.round(response.data.main.feels_like) + ' °C';
+        humidity.value = response.data.main.humidity + '%';
+        weather.value = response.data.weather[0].main;
+        date.value = getCurrentDate();
+        //ADD STAD VAN DE API ALS HET MET SEARCH BUGS GAAT LEVEREN
+
+        console.log(`Current temperature in ${city.value}: ${temperature.value}°C`);
     })
     .catch(error => {
         console.log('Error:', error);
     });
 }
 
+function getCurrentDate() {
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, '0');
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const year = currentDate.getFullYear().toString();
+
+    const formattedDate = `${day}-${month}-${year}`;
+    return formattedDate;
+}
+
 onMounted(() => {
-    getTemperature();
-    setInterval(getTemperature, 3000);
+    getWeatherData();
+    setInterval(getWeatherData, 3000); //TODO: verander naar 1 s
 });
 </script>
 
@@ -66,6 +84,10 @@ article {
     background-color: white;
     border-radius: 15px;
     box-shadow: 0 3px 10px #00000033;
+}
+
+i {
+    font-size: 24px;
 }
 
 .color-size {
@@ -117,6 +139,7 @@ article {
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    white-space: nowrap;
 }
 
 
@@ -125,6 +148,10 @@ and (max-width: 1000px) {
     .weather-box {
         width: 400px;
         height: 250px;
+    }
+
+    i {
+        font-size: 20px;
     }
 
     .color-size {
@@ -147,6 +174,10 @@ and (max-width: 530px) {
         height: 175px;
     }
 
+    i {
+        font-size: 16px;
+    }
+
     .color-size {
         font-size: 14px;
     }
@@ -164,6 +195,10 @@ and (max-width: 530px) {
 and (max-width: 380px) {
     .weather-box {
         width: 240px;
+    }
+
+    i {
+        font-size: 15px;
     }
 
     .color-size {
