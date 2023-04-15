@@ -1,7 +1,8 @@
 <template>
 <nav>
-    <h2>Know the weather everywhere, at anytime</h2>
+    <h2>Know the weather anywhere, at anytime</h2>
     <!-- TODO: insert search bar[COMPONENT]-->
+    <input type="text" placeholder="Search.."> <!--TESSSSSSSSSSST-->
 </nav>
 </template>
 
@@ -11,11 +12,11 @@
 <style scoped>
 nav {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 nav h2 {
-    /* color: #353535; */
     padding: 15px 25px;
     border-radius: 25px;
     font-size: 26px;
