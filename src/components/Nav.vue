@@ -1,7 +1,7 @@
 <template>
 <nav>
     <h2>Know the weather everywhere, at anytime</h2>
-    <!-- TODO: insert search bar-->
+    <!-- TODO: insert search bar[COMPONENT]-->
 </nav>
 </template>
 

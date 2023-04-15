@@ -7,16 +7,9 @@ Front-end
 ========
 -vue
 -motion.js
+-axios
 
 Dev Dependencies
 ========
 -vite
 -eslint
-
-Back-end
-========
--axios
-
-Dev Dependencies
-========
--nodemon
