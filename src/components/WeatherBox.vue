@@ -92,7 +92,7 @@ i {
 
 .color-size {
     font-size: 20px;
-    color: #003780;
+    color: #0062b3;
 }
 
 #temp {
@@ -102,7 +102,7 @@ i {
     align-items: center;
     font-size: 65px;
     font-weight: bold;
-    color: #0055c4;
+    color: #008cff;
 }
 
 #weather {
@@ -117,7 +117,7 @@ i {
     justify-content: flex-start;
     font-size: 28px;
     font-weight: bold;
-    color: #003780;
+    color: #0078da;
 }
 
 #date {

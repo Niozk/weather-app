@@ -1,12 +1,12 @@
 <template>
 <nav>
     <h2>Know the weather anywhere, at anytime</h2>
-    <!-- TODO: insert search bar[COMPONENT]-->
-    <input type="text" placeholder="Search.."> <!--TESSSSSSSSSSST-->
+    <SearchBar />
 </nav>
 </template>
 
 <script setup>
+import SearchBar from './SearchBar.vue'
 </script>
 
 <style scoped>
