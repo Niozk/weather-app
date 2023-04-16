@@ -1,6 +1,6 @@
 <template>
-<form class="search-bar" @submit.prevent="TESTESTEST">
-    <input type="text" class="search-text" name="search-text" placeholder="Enter the location">
+<form class="search-bar" @submit.prevent="getSearchResult">
+    <input type="text" class="search-text" id="search-text" name="search-text" placeholder="Enter the location">
     <button type="submit" class="search-button">
         <i class="icon-search"></i>
     </button>
@@ -8,6 +8,13 @@
 </template>
 
 <script setup>
+import { store } from '../store.js'
+
+function getSearchResult() {
+    const searchResult = document.getElementById('search-text').value;
+    store.selectedLocation = searchResult;
+    console.log(store.selectedLocation);
+}
 
 </script>
 

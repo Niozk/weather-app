@@ -2,7 +2,7 @@
 <article>
     <div class="weather-box">
         <div id="temp">{{ temperature }}</div>
-        <div class="color-size" id="weather">{{ weather}}</div>
+        <div class="color-size" id="weather">{{ weather }}</div>
         <div id="city-name">{{ city }}</div>
         <div class="color-size" id="date">{{ date }}</div>
         <div class="color-size" id="humidity"><i class="icon-tint"></i>&nbsp;{{ humidity }}</div>
@@ -12,14 +12,15 @@
 </template>
     
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+import { store } from '../store.js'
 import axios from 'axios';
 
 const apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
 const apiKey = 'e4f5d4086edc70493ee3c27099fff3d2';
 let temperature = ref('');
 let weather = ref('');
-let city = ref('London');
+let city = ref(store.selectedLocation);
 let date = ref('');
 let humidity = ref('');
 let feelingTemperature = ref('');
@@ -27,7 +28,7 @@ let feelingTemperature = ref('');
 function getWeatherData() {
     axios.get(apiUrl, {
         params: {
-            q: city.value,
+            q: store.selectedLocation,
             appid: apiKey,
             units: 'metric'
         }
@@ -37,8 +38,8 @@ function getWeatherData() {
         feelingTemperature.value = Math.round(response.data.main.feels_like) + ' °C';
         humidity.value = response.data.main.humidity + '%';
         weather.value = response.data.weather[0].main;
+        city.value = response.data.name;
         date.value = getCurrentDate();
-        //ADD STAD VAN DE API ALS HET MET SEARCH BUGS GAAT LEVEREN
 
         console.log(`Current temperature in ${city.value}: ${temperature.value}°C`);
     })
@@ -59,7 +60,13 @@ function getCurrentDate() {
 
 onMounted(() => {
     getWeatherData();
-    setInterval(getWeatherData, 3000); //TODO: verander naar 1 s
+    setInterval(getWeatherData, 5000);
+});
+
+watch(() => store.selectedLocation, async (newCity, oldCity) => {
+    if (newCity !== oldCity) {
+        getWeatherData();
+    }
 });
 </script>
 
