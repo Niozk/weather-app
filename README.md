@@ -1,5 +1,5 @@
 # weather-app
-This is a simple fullstack weather app made using vue
+This is a simple fullstack weather app made using Vue (including a small selfmade store)
 
 [used package manager: node.js]
 

@@ -24,6 +24,7 @@ let city = ref(store.selectedLocation);
 let date = ref('');
 let humidity = ref('');
 let feelingTemperature = ref('');
+let alreadyRun = false;
 
 function getWeatherData() {
     axios.get(apiUrl, {
@@ -40,11 +41,18 @@ function getWeatherData() {
         weather.value = response.data.weather[0].main;
         city.value = response.data.name;
         date.value = getCurrentDate();
+        alreadyRun = false
 
         console.log(`Current temperature in ${city.value}: ${temperature.value}°C`);
     })
     .catch(error => {
         console.log('Error:', error);
+
+        if (!alreadyRun) {
+            console.log('hoi5555555')
+            store.popup = true;
+            alreadyRun = true;
+        }
     });
 }
 

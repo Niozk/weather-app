@@ -1,9 +1,7 @@
 <template>
 <form class="search-bar" @submit.prevent="getSearchResult">
     <input type="text" class="search-text" id="search-text" name="search-text" placeholder="Enter the location">
-    <button type="submit" class="search-button">
-        <i class="icon-search"></i>
-    </button>
+    <button type="submit" class="search-button"><i class="icon-search"></i></button>
 </form>
 </template>
 
